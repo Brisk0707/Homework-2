@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var viewArea: UIView!
     
@@ -27,9 +27,38 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         viewArea.backgroundColor = UIColor(red: CGFloat(1/255), green: CGFloat(255/255), blue: CGFloat(1/255), alpha: 1)
     }
+    
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        redTextField.delegate = self
+        redTextField.returnKeyType = .done
+        
+        greenTextField.delegate = self
+        greenTextField.returnKeyType = .done
+        
+        blueTextField.delegate = self
+        blueTextField.returnKeyType = .done
+
+        self.view.addSubview(redTextField)
+        self.view.addSubview(blueTextField)
+    }
+
+    
+    func textFieldShouldReturn(_ blueTextField: UITextField) -> Bool
+    {
+        blueTextField.resignFirstResponder()
+        blueLabel.text = blueTextField.text
+        return true
+    }
+    
+    
+    
+    
 
     @IBAction func redSliderChanged(_ sender: Any) {
         viewArea.backgroundColor = UIColor(red: CGFloat(redSlider.value/255), green: CGFloat(greenSlider.value/255), blue: CGFloat(blueSlider.value / 255), alpha: 1)
