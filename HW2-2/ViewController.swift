@@ -27,34 +27,42 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewArea.backgroundColor = UIColor(red: CGFloat(1/255), green: CGFloat(255/255), blue: CGFloat(1/255), alpha: 1)
-    }
     
-    
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-        redTextField.delegate = self
-        redTextField.returnKeyType = .done
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
         
-        greenTextField.delegate = self
-        greenTextField.returnKeyType = .done
+        let flexiblespace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         
-        blueTextField.delegate = self
-        blueTextField.returnKeyType = .done
-
-        self.view.addSubview(redTextField)
-        self.view.addSubview(blueTextField)
-    }
-
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(self.doneClicked))
+        
+        toolbar.setItems([flexiblespace, doneButton], animated: true)
+        
+        redTextField.inputAccessoryView = toolbar
+        greenTextField.inputAccessoryView = toolbar
+        blueTextField.inputAccessoryView = toolbar
+        
+        
     
-    func textFieldShouldReturn(_ blueTextField: UITextField) -> Bool
-    {
-        blueTextField.resignFirstResponder()
-        blueLabel.text = blueTextField.text
-        return true
     }
+    
+    @objc func doneClicked() {
+        view.endEditing(true)
+        
+        
+        redSlider.value = Float(redTextField.text!)!
+        greenSlider.value = Float(greenTextField.text!)!
+        blueSlider.value = Float(blueTextField.text!)!
+        
+        
+        viewArea.backgroundColor = UIColor(red: CGFloat(Float(redTextField.text!)!/255), green: CGFloat(Float(greenTextField.text!)!/255), blue: CGFloat(Float(blueTextField.text!)!/255), alpha: 1)
+        
+        redLabel.text = redTextField.text!
+        blueLabel.text = blueTextField.text!
+        greenLabel.text = greenTextField.text!
+        
+    }
+    
+    
     
     
     
@@ -63,14 +71,18 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBAction func redSliderChanged(_ sender: Any) {
         viewArea.backgroundColor = UIColor(red: CGFloat(redSlider.value/255), green: CGFloat(greenSlider.value/255), blue: CGFloat(blueSlider.value / 255), alpha: 1)
         redLabel.text = String(round(redSlider.value*100)/100)
+        redTextField.text = String(round(redSlider.value*100)/100)
     }
     @IBAction func greenSliderChanged(_ sender: Any) {
         viewArea.backgroundColor = UIColor(red: CGFloat(redSlider.value/255), green: CGFloat(greenSlider.value/255), blue: CGFloat(blueSlider.value / 255), alpha: 1)
         greenLabel.text = String(round(greenSlider.value*100)/100)
+        greenTextField.text = String(round(greenSlider.value*100)/100)
+
     }
     @IBAction func blueSliderChanged(_ sender: Any) {
         viewArea.backgroundColor = UIColor(red: CGFloat(redSlider.value/255), green: CGFloat(greenSlider.value/255), blue: CGFloat(blueSlider.value/255), alpha: 1)
         blueLabel.text = String(round(blueSlider.value*100)/100)
+        blueTextField.text = String(round(blueSlider.value*100)/100)
     }
 }
 
