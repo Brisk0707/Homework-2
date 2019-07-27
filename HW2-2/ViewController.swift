@@ -27,7 +27,11 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
+        view.addGestureRecognizer(tap)
+
+
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
         
@@ -44,6 +48,22 @@ class ViewController: UIViewController, UITextFieldDelegate {
         
     
     }
+    
+    @objc func dismissKeyboard() {
+        redSlider.value = Float(redTextField.text!)!
+        greenSlider.value = Float(greenTextField.text!)!
+        blueSlider.value = Float(blueTextField.text!)!
+        
+        
+        viewArea.backgroundColor = UIColor(red: CGFloat(Float(redTextField.text!)!/255), green: CGFloat(Float(greenTextField.text!)!/255), blue: CGFloat(Float(blueTextField.text!)!/255), alpha: 1)
+        
+        redLabel.text = redTextField.text!
+        blueLabel.text = blueTextField.text!
+        greenLabel.text = greenTextField.text!
+        view.endEditing(true)
+    }
+    
+    
     
     @objc func doneClicked() {
         view.endEditing(true)
