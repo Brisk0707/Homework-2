@@ -4,7 +4,6 @@
 //
 //  Created by Борис Крисько on 7/26/19.
 //  Copyright © 2019 Borys Krisko. All rights reserved.
-//
 
 import UIKit
 
